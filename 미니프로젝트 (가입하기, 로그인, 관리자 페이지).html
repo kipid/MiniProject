@@ -1,0 +1,85 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3, user-scalable=yes"/>
+
+<codeprint id="docuK-style">
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<div class="docuK rendered"><div class="sec" id="docuK-log"></div></div>
+<!-- From kipid.tistory CDN -->
+<link rel="stylesheet" media="all" type="text/css" href="http://cfs.tistory.com/custom/blog/146/1468360/skin/images/docuK-2.2.css">
+<script src="http://cfs.tistory.com/custom/blog/146/1468360/skin/images/docuK-prepare-2.2.js" charset="utf-8"></script>
+</codeprint><!-- docuK-style -->
+
+<codeprint class="SEE">
+# 미니프로젝트 (가입하기, 로그인, 관리자 페이지)
+
+[OO 온라인 서비스] 미니프로젝트 내용
+
+<ol>
+<li>사용자 등록 페이지 : id, password, name, email을 접수 받아 DB에 저장</li>
+<li>사용자 로그인 페이지 : 로그인 정보를 사용자로부터 받아서 성공/실패 여부 알림</li>
+<li>서비스 관리자 페이지 :<br>
+ &nbsp; &nbsp; 1) 등록된 사용자 목록 보여줌<br>
+ &nbsp; &nbsp; 2) 특정 사용자 password 변경 저장할 수 있도록 함</li>
+</ol>
+
+
+
+## TOC
+
+
+
+## DB
+
+```[.linenums]
+CREATE DATABASE `miniProject`;
+USE `miniProject`;
+
+CREATE USER 'mp'@'localhost' IDENTIFIED BY '{--password--}';
+GRANT ALL ON `miniProject`.* TO 'mp'@'localhost';
+```/
+
+
+
+### Table `Users`
+
+```
+CREATE TABLE `Users` (
+	`id` char(21) NOT NULL UNIQUE
+	, `name` char(21) NOT NULL
+	, `email` varchar(50) NOT NULL UNIQUE
+	, `pwd_salt` binary(128) NOT NULL #DEFAULT random_bytes(128)
+	, `pwd` binary(64) NOT NULL
+	, `pwd_iteration` int NOT NULL DEFAULT 10000
+	, PRIMARY KEY (`id`)
+);
+```/
+
+
+
+## RRA
+
+<ol class="refs">
+<li></li>
+</ol>
+</codeprint><!-- SEE -->
+
+<codeprint id="docuK-script">
+<script>
+kipid.wait=512;
+kipid.delayPad=0;
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+	skipStartupTypeset: true, // Skip startup typeset.
+	positionToHash: false, // No repositioning to #something anchor.
+	tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']], // Using $ for inline math.
+		displayMath: [['$$','$$'], ['\\[','\\]']], // Using $$ for outline math.
+		processEscapes: true, // Escape \$
+		processEnvironments: false, // Ignore \begin{something} ... \end{something}
+	}
+});
+</script>
+<!-- From kipid.tistory CDN -->
+<script src="http://cfs.tistory.com/custom/blog/146/1468360/skin/images/docuK-postProcess-2.2.js" charset="utf-8"></script>
+</codeprint><!-- docuK-script -->
